@@ -17,6 +17,7 @@
 
 		<app.runtime>4.3.0-20210119</app.runtime>
 		<mule.maven.plugin.version>3.4.2</mule.maven.plugin.version>
+		<munit.version>2.3.2</munit.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -38,10 +39,33 @@
 								<properties>
 									<env>dev</env>
 									<api.id>16833706</api.id>
-									<anypoint.platform.client_id>33a3258cc17540eda5720ebccd709c1e</anypoint.platform.client_id>
-									<anypoint.platform.client_secret>54Eff04773DA4bc4Be852Be9d87F823d</anypoint.platform.client_secret>
+									<anypoint.platform.client_id>${anypoint.platform.client_id}</anypoint.platform.client_id>
+									<anypoint.platform.client_secret>${anypoint.platform.client_secret}</anypoint.platform.client_secret>
 								</properties>
 							</cloudHubDeployment>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>com.mulesoft.munit.tools</groupId>
+						<artifactId>munit-maven-plugin</artifactId>
+						<version>${munit.version}</version>
+						<executions>
+							<execution>
+								<id>test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>test</goal>
+									<goal>coverage-report</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<coverage>
+								<runCoverage>true</runCoverage>
+								<formats>
+									<format>html</format>
+								</formats>
+							</coverage>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -91,8 +115,8 @@
 				<configuration>
 					<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
-						<username>chinna04</username>
-						<password>Realtime@123</password>
+						<username>${anypoint.username}</username>
+						<password>${anypoint.password}</password>
 						<muleVersion>4.3.0</muleVersion>
 						<objectStoreV2>true</objectStoreV2>
 						<properties>
@@ -102,6 +126,20 @@
 						</properties>
 					</cloudHubDeployment>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mulesoft.munit.tools</groupId>
+				<artifactId>munit-maven-plugin</artifactId>
+				<version>${munit.version}</version>
+				<executions>
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -124,6 +162,20 @@
 			<artifactId>mule-apikit-module</artifactId>
 			<version>1.4.1</version>
 			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-runner</artifactId>
+			<version>2.3.2</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.mulesoft.munit</groupId>
+			<artifactId>munit-tools</artifactId>
+			<version>2.3.2</version>
+			<classifier>mule-plugin</classifier>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
